@@ -1,0 +1,13 @@
+{
+ "name": "rqwst",
+ "field": "rqwst-lavender",
+ "contexts": {
+  "light": {
+   "--bg-from": "#D4C6E1",
+   "--bg-to": "#EBDEE8",
+   "--bg-gradient": "linear-gradient(45deg, #D4C6E1 0%, #EBDEE8 100%)",
+   "--bg-edge": "#EBDEE8"
+  },
+  "dark": {}
+ }
+}

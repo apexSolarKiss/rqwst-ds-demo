@@ -1,0 +1,109 @@
+/* RQWST // the artifact's own layout and Tier 3 composition.
+   No color, font, type size or token of its own: color is the presentation
+   assignment's (rqwst-assignment.css), text takes its register role, and
+   every number here is layout. Never edit a vendored file. */
+
+body { min-height: 100vh; }
+
+/* The source lockup, composed from its two parts for the shell's expanded
+   identity: the DIN wordmark left, the plume right. Every number is the
+   extracted lockup's own (assets/identity-extraction.json): the union of the
+   two parts' painted boxes, 1612.015 x 393.029, and each part's box in it.
+   No compact height is declared, so the plume takes the shell's footprint. */
+.surface {
+  --surface-identity-ratio: 1612.015 / 393.029;
+  --surface-identity-wordmark-x: 0%;
+  --surface-identity-wordmark-y: 13.3479%;
+  --surface-identity-wordmark-w: 78.388%;
+  --surface-identity-wordmark-h: 77.275%;
+  --surface-identity-symbol-x: 81.2578%;
+  --surface-identity-symbol-y: 0%;
+  --surface-identity-symbol-w: 18.7422%;
+  --surface-identity-symbol-h: 100%;
+}
+
+/* The template's column sits inside the shell's payload, which already
+   insets it: the column keeps its measure and starts at the lockup's edge. */
+.surface-payload .artifact { margin-left: 0; padding-left: 0; padding-right: 0; }
+:root[data-surface-nav-mode="desktop"] [id] { scroll-margin-top: calc(var(--surface-nav-top-depth) + var(--space-5)); }
+/* On a narrow screen the shell's navigation sits at the foot, so a target
+   only needs the column's own breathing space above it. */
+:root[data-surface-nav-mode="mobile"] [id] { scroll-margin-top: var(--space-5); }
+
+/* The metadata strip: its facts set close. */
+.meta > p { margin: 0; }
+
+/* The sequence: one register group per step, in order, a register flow
+   whose peers sit --space-5 apart. */
+:where(.artifact) .rq-steps { list-style: none; padding-left: 0; gap: var(--space-5); }
+
+/* A plane on the panel material: its content stacked at the plane's gap. */
+.rq-plane { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-5); }
+
+/* Labeled pairs, two or more to a row where the column is wide enough. The
+   pairs sit closer together (--space-4) than the plane's gap (--space-5)
+   that leads and trails them. */
+:where(.artifact) .rq-pairs { list-style: none; padding-left: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--space-4) var(--space-5); }
+
+/* The table of sample requests: an owner and a deadline keep their lines;
+   the request and its status wrap. A per-table width the register leaves to
+   its consumer. */
+[aria-labelledby="requests"] .doc-table > tbody > tr > td:is(:nth-child(2), :nth-child(3)) { white-space: nowrap; }
+
+/* A keyboard-focused table box: the page makes it focusable (tabindex), and
+   at the donor commit the register's scroll fade masks the browser's own
+   focus ring on a narrow screen. This is design-system-ASK#211's rule, kept
+   here until a release takes that commit's surface-document.css (VENDOR.md,
+   behind by decision); remove it then. */
+.doc-table-scroll:focus-visible {
+  outline: 2px solid var(--fg-1);
+  outline-offset: var(--space-1);
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+
+/* The landing section: rqwst.com's landing page set in the register's roles,
+   ahead of the concept example. The source sets its hero in open space; here
+   that space is the register's own steps, so the section stays in normal flow
+   at every width, with no fixed height to clip on a phone. Its parts stack at
+   the plane's gap; the top bar holds the source label at its start and the
+   language note and the sign-in action at its end, wrapping on a narrow
+   column. The hero keeps the titled block's own gap, and the offer lines
+   are a register group. */
+.rq-landing { display: flex; flex-direction: column; gap: var(--space-5); padding-block-end: var(--space-6); }
+.rq-landing-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); margin-block-end: var(--space-6); }
+
+/* The provenance footer on a narrow column: each name above its value, as
+   the register's labeled pairs stand, at the shell's own narrow breakpoint. */
+@media (max-width: 640px) {
+  footer.provenance dl { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-1); }
+  footer.provenance dd + dt { margin-top: var(--space-3); }
+}
+
+/* Print: the browser's paper, margins and page breaks, in the screen's own
+   roles and composition. Each sheet takes the field's edge color, the stop
+   the screen shows past the document, flat and to the paper's edge: the
+   root's gradient, fixed to the viewport, stopped at the screen's height on
+   every sheet, and scrolled, it stopped at the document's end on the last
+   one. The field prints with its foreground, so neither scheme leaves its
+   text on bare paper. The shell keeps its own navigation layers off paper and
+   prints the lockup at rest (surface-shell.css, its print block); the page's
+   footer controls, which do nothing on paper, stay on screen. On paper the
+   page ends at the provenance footer: the shell's bottom padding, which on
+   screen sits below those controls (and, in its narrow navigation mode, the
+   shell's own print padding), would otherwise carry onto an empty last
+   sheet. A heading keeps its section's lead paragraph, and a paragraph
+   keeps what follows it, unless it ends its section. The landing section
+   drops its own trailing space on paper, so it fits the first sheet with the
+   lockup. No print type or composition of its own. */
+@page { background-color: var(--bg-edge); }
+@media print {
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-image: none; }
+  html { background-color: transparent; }
+  .surface-footer { display: none !important; }
+  .surface, :root[data-surface-nav-mode] .surface[data-surface-nav] { padding-bottom: 0; }
+  .doc-section-title, .doc-subsection-title, .doc-section > .doc-body:not(:last-child) { break-after: avoid; }
+  .rq-landing { padding-block-end: 0; }
+  .rq-landing-bar { margin-block-end: 0; }
+  .surface-separate, .doc-group, .doc-table-scroll, .meta, .provenance, li, .doc-section > .doc-body, .rq-landing-bar, .rq-landing-hero { break-inside: avoid; }
+}

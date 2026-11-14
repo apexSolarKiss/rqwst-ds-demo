@@ -1,0 +1,3 @@
+# The deployment serves the sealed release. source/ and tools/ are for reproducing it in the repository.
+/source/
+/tools/

@@ -1,0 +1,160 @@
+    /* ====================================================================
+       Class B output-artifact overlay.
+
+       TEXT IS THE DOCUMENT REGISTER'S. Every title, heading, paragraph,
+       list item, link, label, metadata value, code span, quotation,
+       preformatted block and table value carries its register role
+       (surface-document.css, surface-text-link.css) and takes that role's
+       style. This overlay sets NO type metric and NO foreground on text,
+       and NO screen geometry on a table that adopts the register's document
+       table composition; it owns only the artifact's own geometry — the
+       column, the metadata strip, lists, the geometry of a table that does
+       not adopt the composition, rules and the provenance footer — which the
+       register leaves to its consumer, and one named print adaptation for an
+       adopted table (Tables, below). Every other geometry rule on an element
+       the register may also style is written in :where(), at zero
+       specificity, so it never outranks a register rule of class
+       specificity. Where the register's own rule is also at zero
+       specificity, as for a comparison's lists, this file loads later and
+       would win, so its rule excludes that population, as the list rule
+       does.
+
+       Apart from a presentation assignment (README), the ONE sanctioned
+       Class B override is LINE INTENSITY: report rules,
+       borders, table lines, and dividers read too faint at the foundation
+       hairline (white .45 / .22) on the light field, so a Class B-scoped
+       token carries stronger white lines in light mode and inherits the
+       foundation lavender lines in dark. It draws ONLY the artifact's own
+       geometry below — including the rules on the cells of a table that does
+       not adopt the composition — and never a table the composition draws, a
+       text foreground, a passage rail or the disclosure's panel. (Class A diagrams keep
+       their own scoped --diagram-* tokens — text roles aliasing the
+       foundation --fg-*, strokes local — for the same reason: color is
+       applied to class-targeted elements, not base elements.)
+       ==================================================================== */
+
+    :root {
+      --artifact-line:      rgba(255, 255, 255, 0.90); /* report rules · borders · table lines (light) */
+      --artifact-line-soft: rgba(255, 255, 255, 0.55); /* fainter dividers (light) */
+    }
+    :root[data-theme="dark"] {
+      --artifact-line:      var(--line-1);             /* dark: foundation lavender lines read fine */
+      --artifact-line-soft: var(--line-2);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) {
+        --artifact-line:      var(--line-1);
+        --artifact-line-soft: var(--line-2);
+      }
+    }
+
+    /* ---------- Column ----------
+       The register's .doc-flow sets the space between the parts. */
+    .artifact {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: var(--space-7) var(--space-5);
+    }
+
+    /* ---------- Metadata strip — layout only ----------
+       Its names take .doc-label and its values .doc-meta. */
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-5);
+      margin: 0;
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--artifact-line);
+    }
+    .meta > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); }
+
+    /* ---------- Lists and rules ----------
+       List items take .doc-body. A comparison's own lists, its points, its
+       facts and its key, keep the register's geometry. */
+    :where(.artifact) :where(ul, ol):where(:not(.doc-compare-points, .doc-compare-facts, .doc-compare-key)) {
+      display: flex; flex-direction: column; gap: var(--space-2);
+      margin: 0; padding-left: var(--space-5);
+    }
+    :where(.artifact) :where(hr) { border: 0; border-top: 1px solid var(--artifact-line-soft); margin: 0; }
+
+    /* ---------- Tables ----------
+       A table adopts the register's document table composition by class:
+       table.doc-table directly inside a .doc-table-scroll box, which is named
+       as a region. A dense technical table also carries table.doc-dense-table,
+       with .doc-label headers and .doc-table-cell values; a narrative table
+       carries no dense marker, and its headers take .doc-label and its cells
+       .doc-body. .doc-table-num marks a numeric column's header and cells.
+       On screen the composition draws an adopted table's rules, spacing,
+       numeral alignment and line breaking, and the rules below exclude it, so
+       nothing here competes with the composition. A table wider than its box
+       scrolls inside it, never the page. This template loads no script, so
+       without the optional overflow helper that box shows no scroll cue. A
+       box does not scroll on paper, so the print adaptation at the end of
+       this section adapts an adopted table to the printed column.
+       A table that must not scroll sideways, that stacks its rows or that
+       needs a print treatment the adaptation does not give it does not adopt
+       the composition. Without both markers it keeps the artifact's own
+       table geometry below: full width, rules in the line overlay, and cells
+       that wrap a long token rather than widen the page. Stacked rows, or any
+       other table geometry, are the consuming project's to supply. */
+    :where(.artifact) :where(table):not(:where(.doc-table-scroll > table.doc-table)) { width: 100%; border-collapse: collapse; }
+    :where(.artifact) :where(th, td):not(:where(.doc-table-scroll > table.doc-table > * > tr > *, .doc-table-scroll > table.doc-table > tr > *)) {
+      text-align: left; vertical-align: top; padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--artifact-line-soft); overflow-wrap: anywhere;
+    }
+    :where(.artifact) :where(thead th):not(:where(.doc-table-scroll > table.doc-table > thead > tr > th)) { border-bottom-color: var(--artifact-line); }
+
+    /* Print adaptation — this scaffold's own, for print only.
+       Paper does not scroll, so in print the composition's choices that rely
+       on its box scrolling yield, and an adopted table can fit the printed
+       column: a narrative table drops its 32rem measure, and a dense value
+       outside a numeric column, like code in any adopted cell, wraps. Where
+       the printed column is narrower than the table's natural width, such a
+       value or code may break between any two characters, short tokens
+       included, rather than be cut. The table's markup, text roles and type,
+       cell spacing, rules and a numeric column's alignment and unbroken
+       figures are unchanged, and nothing here reaches the screen. Each rule
+       is as weak as the cascade allows: the table and cell rules carry one
+       element type, which beats the composition's zero-specificity rules, and
+       the code rule carries one class more than the composition's own. A
+       table whose columns cannot sit side by side in the printed column still
+       overflows it and is cut at its box's edge; a table that needs more
+       stays unadopted, and its geometry, print included, is the consuming
+       project's. */
+    @media print {
+      :where(.artifact .doc-table-scroll) > table:where(.doc-table) { min-width: 0; }
+      :where(.artifact .doc-table-scroll > table.doc-table > * > tr, .artifact .doc-table-scroll > table.doc-table > tr) > td:where(.doc-table-cell:not(.doc-table-num)) { white-space: normal; overflow-wrap: anywhere; }
+      .artifact .doc-table-scroll > table.doc-table :is(code, .doc-code) { overflow-wrap: anywhere; }
+    }
+
+    /* ---------- Provenance footer — layout only ----------
+       Its names take .doc-label and its values .doc-meta. */
+    footer.provenance {
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--artifact-line);
+    }
+    footer.provenance dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: baseline;
+      gap: var(--space-2) var(--space-4);
+      margin: 0;
+    }
+
+    /* ====================================================================
+       TIER 3 OVERLAY SLOT — consuming project identity / chrome goes HERE.
+       DOWNSTREAM: add project-specific banners, status rails, review-status
+       strips, or branding as Tier 3 here. Keep minimal. Bind to foundation
+       tokens (--fg-*, --artifact-line, type tokens) and to register roles for
+       any text; do NOT redefine Tier 1/2 tokens, other than through a
+       declared presentation assignment (README), do NOT restyle a register
+       role, do NOT introduce hues outside the closed palette or that
+       assignment's recorded colors, and do NOT
+       propagate the design-system's own identity (logo-ASK / "ASK Design
+       System") unless your artifact is itself an ASK-instance surface, or,
+       for the logo-ASK wordmark alone, ASK has explicitly assigned that
+       wordmark to your project as its locally supplied Tier 3 and this
+       artifact falls within the assignment's recorded scope.
+       This slot is intentionally empty in the shared pattern.
+       ==================================================================== */
+

@@ -1,0 +1,50 @@
+/* RQWST presentation assignment // consumer-owned.
+
+   Declared on the root: data-surface-assignment="rqwst" names this binding,
+   data-surface-field="rqwst-lavender" names the light field it paints. This
+   file loads after every unmodified vendored design-system-ASK file and after
+   the output-artifact overlay. It changes no vendored byte, renames no ASK
+   color and adds no type, spacing, geometry or control.
+
+   The light context binds the field only: RQWST's source stops on the shared
+   45-degree mechanism, #D4C6E1 bottom-left to #EBDEE8 top-right; the browser
+   edge takes the top-right stop, as ASK's light edge does. The foreground
+   ramp, --fg-1, --fg-2 and --fg-3, is inherited: the foundation's own light
+   values read against this field. The wordmark (#8B79A2) and the plume
+   (#B18DFE) are Tier 3: their colors are the extracted artwork's own fills,
+   so no token carries them here.
+
+   Everything else is inherited: the foreground ramp, lines, line overlay,
+   glass and panel material, shadows, emphasis accents, link underline and
+   focus, and the rail dose, which the field declaration selects (bare on this
+   unreviewed field; no rail is drawn in this artifact).
+
+   The dark context binds nothing below Tier 3. Its field is ASK's exact ink
+   pair and its foreground ASK's #D4C6E1 ramp, so the foundation's own dark
+   values stay in force on every one of its three dark paths.
+
+   The light binding is scoped to the light context only, on the same three
+   paths the foundation uses: an explicit data-theme="light"; no explicit theme
+   under a light (or absent) system preference; and never under .theme-dark. */
+
+:root[data-surface-assignment="rqwst"] {
+  --rqwst-field-from: #D4C6E1;      /* RQWST light field, bottom-left stop */
+  --rqwst-field-to: #EBDEE8;        /* RQWST light field, top-right stop */
+}
+
+@media not (prefers-color-scheme: dark) {
+  :root[data-surface-assignment="rqwst"]:not([data-theme="dark"]):not(.theme-dark) {
+    --bg-from: var(--rqwst-field-from);
+    --bg-to: var(--rqwst-field-to);
+    --bg-gradient: linear-gradient(45deg, var(--bg-from) 0%, var(--bg-to) 100%);
+    --bg-edge: var(--rqwst-field-to);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-surface-assignment="rqwst"][data-theme="light"]:not(.theme-dark) {
+    --bg-from: var(--rqwst-field-from);
+    --bg-to: var(--rqwst-field-to);
+    --bg-gradient: linear-gradient(45deg, var(--bg-from) 0%, var(--bg-to) 100%);
+    --bg-edge: var(--rqwst-field-to);
+  }
+}

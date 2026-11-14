@@ -1,0 +1,61 @@
+{
+ "source": "RQWST identity artboard, light, 16:9 (native file, not published)",
+ "source_sha256": "d65f555eeb6c5002a6914613eaeb608d548f4640963d268b735d7c6433866ee0",
+ "artboard": [
+  2160,
+  1215
+ ],
+ "method": "MuPDF 1.27.2.3 get_svg_image(text_as_path=True); exact Bezier extrema bounds",
+ "wordmark": {
+  "file": "rqwst-wordmark.svg",
+  "box_in_artboard": [
+   291.733,
+   441.672,
+   1555.359,
+   745.384
+  ],
+  "w": 1263.626,
+  "h": 303.713,
+  "in_lockup_pct": {
+   "x": 0.0,
+   "y": 13.3479,
+   "w": 78.388,
+   "h": 77.275
+  }
+ },
+ "plume": {
+  "file": "rqwst-plume.svg",
+  "box_in_artboard": [
+   1601.621,
+   389.211,
+   1903.748,
+   782.24
+  ],
+  "w": 302.127,
+  "h": 393.029,
+  "in_lockup_pct": {
+   "x": 81.2578,
+   "y": 0.0,
+   "w": 18.7422,
+   "h": 100.0
+  }
+ },
+ "lockup": {
+  "file": "rqwst-lockup.svg",
+  "box_in_artboard": [
+   291.733,
+   389.211,
+   1903.748,
+   782.24
+  ],
+  "w": 1612.015,
+  "h": 393.029
+ },
+ "glyph_origins_x": [
+  "256.2529",
+  "508.39405",
+  "758.86538",
+  "1110.3601",
+  "1342.0462"
+ ]
+}

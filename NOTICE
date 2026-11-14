@@ -1,0 +1,40 @@
+RQWST // design demo
+Copyright 2026 Andrew S Klug // ASK
+
+This repository's code and reusable interface implementation are licensed
+under the Apache License, Version 2.0.
+See the LICENSE file for the full license text.
+
+This product includes files from design-system-ASK
+(https://github.com/apexSolarKiss/design-system-ASK), copied unmodified under
+the Apache License, Version 2.0. They and their donor commit are listed in
+VENDOR.md. source/styles/output-artifact.template.css is the style block of
+design-system-ASK's output-artifact template, also unmodified; VENDOR.md names
+its source. design-system-ASK's own LICENSE and NOTICE are reproduced in
+licenses/design-system-ASK/.
+
+The Inter and JetBrains Mono typefaces are licensed under the SIL Open Font
+License, Version 1.1: see source/_dsa-tokens/fonts/Inter-OFL.txt and
+source/_dsa-tokens/fonts/JetBrainsMono-OFL.txt. The published page, index.html,
+embeds both typefaces and carries their complete copyright notices and license
+texts in a comment at its head.
+
+RQWST identity artwork, the wordmark and the plume: Copyright 2025 Andrew S
+Klug // ASK. All rights reserved. It is excluded from the Apache License 2.0.
+Here that is the identity files (source/assets/rqwst-wordmark.svg,
+source/assets/rqwst-plume.svg and source/assets/rqwst-lockup.svg), the same
+drawings embedded in index.html, the browser icon (favicon.svg) and the
+repository artwork that shows them (rqwst-ds-demo-banner.svg,
+rqwst-ds-demo-banner.png and og-image.png). This og-image.png is this page's
+link preview, not the design-system-ASK social card named in
+licenses/design-system-ASK/NOTICE.
+
+The page's visible text and its sample content, as written in
+source/pages/public-demo.html and shown in index.html, are excluded from the
+Apache License 2.0, and no license is granted for them. The landing section's
+copy, apart from the label above its headline, is RQWST's own, from its public
+page at rqwst.com; this repository grants nothing in it. The samples in the concept example are illustrative and
+fictional: every name, outlet, date and count is invented.
+
+This repository makes no other grant. It is not an official RQWST publication,
+and it grants no rights in the RQWST name or identity beyond the terms above.
