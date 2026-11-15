@@ -17,7 +17,9 @@
    Everything else is inherited: the foreground ramp, lines, line overlay,
    glass and panel material, shadows, emphasis accents, link underline and
    focus, and the rail dose, which the field declaration selects (bare on this
-   unreviewed field; no rail is drawn in this artifact).
+   unreviewed field). Neither rail this artifact draws takes a dose on any
+   field: the sequence summary's magenta authorial callout is an emphasis
+   accent, and the steps' rail is the neutral ordered-sequence rail.
 
    The dark context binds nothing below Tier 3. Its field is ASK's exact ink
    pair and its foreground ASK's #D4C6E1 ramp, so the foundation's own dark

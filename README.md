@@ -33,7 +33,7 @@ python3 tools/check.py --donor <a design-system-ASK clone>
 | Yours to edit | What it is |
 |---|---|
 | `source/pages/public-demo.html` | the page: the landing section, the concept example's words and samples, its sections and navigation entries |
-| `source/styles/rqwst.css` | the page's own layout and print rules: the lockup's proportions, the landing section's top bar and stacking, the sequence's steps, the panel planes and their labeled pairs, the table's short columns, the table box's focus outline and the provenance footer on a narrow column. No color, font or type size of its own |
+| `source/styles/rqwst.css` | the page's own layout and print rules: the lockup's proportions, the landing section's top bar and stacking, the steps list's lead in its section, the panel planes and their labeled pairs, the table's short columns and the provenance footer on a narrow column. No color, font or type size of its own |
 | `source/styles/rqwst-assignment.css` | the RQWST presentation assignment: the light field's two stops, bound on the design system's own field mechanism. Every other color role is the design system's |
 | `source/assets/rqwst-assignment.json` | the assignment's declaration, which the design system's role-conformance check reads |
 | `source/assets/rqwst-wordmark.svg` // `rqwst-plume.svg` | RQWST's identity: the wordmark and the plume, each bounded to its own painted edges |

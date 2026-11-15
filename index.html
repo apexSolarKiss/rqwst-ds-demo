@@ -201,7 +201,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <title>RQWST // design demo</title>
 <meta name="description" content="RQWST's public landing page, then an illustrative concept example, on design-system-ASK. The concept samples are fictional.">
 <meta name="dcterms.rights" content="Interface implementation and design-system files: Apache License 2.0. Typefaces: SIL Open Font License 1.1. RQWST identity artwork, the wordmark and the plume: Copyright 2025 Andrew S Klug // ASK, all rights reserved, excluded from the Apache License 2.0. Page copy and sample content: excluded from the Apache License 2.0; no license is granted. The landing section's copy, apart from its label, is RQWST's own, from rqwst.com. Not an official RQWST publication.">
-<meta name="generator" content="design-system-ASK 300ec48 // surface shell + output-artifact v3 register // sealed by tools/seal.py">
+<meta name="generator" content="design-system-ASK 1f5461f // surface shell + output-artifact v3 register // sealed by tools/seal.py">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://rqwst.a-s-k.studio/">
 <meta property="og:site_name" content="RQWST // design demo">
@@ -522,6 +522,12 @@ html, body {
 /* The root carries the solid edge; the body stays transparent so the root's
    background is what propagates to the canvas. */
 html { background-color: var(--bg-edge); }
+/* On paper the body's field scrolls with the document. Fixed, Chrome positions
+   it against the printing window's viewport and paints it only in a strip that
+   wide on each sheet, so a window narrower than the printed column leaves a band
+   of the root's field beside it. Scrolling, it is one gradient the length of the
+   document, the same from any window. It applies only in print. */
+@media print { body { background-attachment: scroll; } }
 body { background-color: transparent; }
 
 h1, .h1 {
@@ -1486,6 +1492,39 @@ a.surface-panel:focus-visible { outline: none; }
                      same heading treatment
      counterexample  a smaller, lighter or recolored heading signaling depth
 
+   ORDERED SEQUENCE
+     meaning         "this comes after the step before" — successive stages
+                     of one ordered run; it orders and does not emphasize.
+                     Succession is not containment: the sequence shares the
+                     hierarchy rail's geometry and keeps its own meaning, and
+                     neither composition composes the other
+     population      .doc-sequence on the list, an ol in the key, and
+                     .doc-sequence-step on each of its direct children. A step
+                     opens on its .doc-label; its internal rhythm is the
+                     composition it carries, a .doc-group in the key
+     owner           this module; the steps, their order and their words stay
+                     with the consuming surface, and the register supplies no
+                     numbering and no list semantics
+     reuses          the hierarchy rail's 1px --line-2 rule and --space-4
+                     inset, declared once for both compositions; --space-5
+                     between steps; the step label's own --fg-3 for each node
+     variation       none
+     exclusions      one continuous rail per sequence, through the whole of
+                     its last step: no segment per step and no rail on a step.
+                     A node is an unfilled ring, drawn only on a direct step:
+                     no fill, accent, glow, shadow or state, because the node
+                     is structural punctuation, not a status. In print, a rule
+                     asks the browser to keep a step that fits on one sheet
+                     whole, so its node, label and body travel together, and
+                     where the sequence continues on the next sheet the rail
+                     runs to the foot of the one before
+     example         five steps on one rail, a ring centered on the rail at
+                     each step's label line, the rail running on through the
+                     last step's body
+     counterexample  a timeline drawn as one segment per step; a filled or
+                     colored node marking progress; a sequence drawn as a
+                     hierarchy level, which says containment
+
    QUOTATION
      meaning         represented voice: words presented as someone's — quoted,
                      or introduced as what a speaker says — with optional
@@ -1662,8 +1701,9 @@ a.surface-panel:focus-visible { outline: none; }
                      rail. Two railed passages in a row are held apart by
                      --space-5, as two emphasis rails are. NEUTRAL IS
                      STRUCTURE ONLY: the 1px hierarchy rail structures a section,
-                     a list or a block, and is never the outer boundary of a
-                     set-apart passage. A labeled range's scope rail
+                     a list or a block, the ordered sequence orders its steps
+                     on the same rule, and neither is ever the outer boundary
+                     of a set-apart passage. A labeled range's scope rail
                      (surface-treatments.css) is not a passage rail: it sits
                      in the outer margin, outside the content edge, and
                      bounds a label's scope beside a passage that keeps its own
@@ -1750,33 +1790,46 @@ a.surface-panel:focus-visible { outline: none; }
      population      table.doc-table as the direct child of a .doc-table-scroll
                      box, for a narrative or a dense table alike; both markers
                      are needed. .doc-table-num on the th and td of a numeric
-                     column whose values share a format
+                     column whose values share a format.
+                     table.doc-compact-table on a narrative table the consumer
+                     declares short enough to fit its column
      owner           this module for the geometry of a table that adopts it.
                      The consumer owns the content, the columns, which tables
-                     are dense, which columns are numeric, any per-table
-                     widths, a name for each scroll box (role="region" with a
-                     label), and whether a table adopts the composition at all
+                     are dense, which are compact, which columns are numeric,
+                     any other per-table widths, a name for each scroll box
+                     (role="region" with a label), and whether a table adopts
+                     the composition at all. The consumer admits a table as
+                     compact only after its longest rows fit the narrowest
+                     column it ships to, at the register's own type sizes
      reuses          the --line-2 rule under every row and the --line-1 rule
                      under the header row; --space-3 block padding and
                      --space-5 between columns; tabular figures; the overflow
                      cue
      variation       a narrative table keeps a 32rem measure and scrolls below
-                     it; a dense value does not wrap; code in a cell breaks
-                     only at its own break opportunities. A table with a
-                     labeled range in its first or only column adds
-                     .doc-table-scroll--range-lane to its box, which keeps the
-                     range's lane inside the box that scrolls: the box reaches
-                     that 14px into the page's margin and pads it back, so no
-                     column, header or cell moves; scrolled, the table's
-                     content passes through the lane. A table without a range
-                     there does not take it, and a consumer that sets the
-                     box's inline margin or width itself restates the pair
+                     it; a compact table, marked table.doc-compact-table,
+                     takes no measure, with the same type, rules and spacing,
+                     and scrolls in its box, with the same cue, only where its
+                     content cannot fit; a dense value does not wrap; code in
+                     a cell breaks only at its own break opportunities. A
+                     table with a labeled range in its first or only column
+                     adds .doc-table-scroll--range-lane to its box, which
+                     keeps the range's lane inside the box that scrolls: the
+                     box reaches that 14px into the page's margin and pads it
+                     back, so no column, header or cell moves; scrolled, the
+                     table's content passes through the lane. A table without
+                     a range there does not take it, and a consumer that sets
+                     the box's inline margin or width itself restates the pair
      exclusions      never implied: not by table.doc-dense-table, not by a text
                      role on a cell and not by the table element, so a table
                      without both markers keeps its consumer's geometry, and a
                      table nested inside a cell takes none of the cell rules. It is
                      not itself a compact density: a comparison read across
                      options adds the comparison table composition (below).
+                     Nor is the compact marker a density: it gives up the
+                     measure alone, never type or spacing. The marker is
+                     never implied, not by a column count, and a comparison
+                     table (table.doc-compare-table) keeps the measure even
+                     when it is marked compact.
                      It has no stacked narrow-width layout: a surface that
                      must not scroll a table sideways, or that stacks its
                      rows, keeps its own geometry and does not adopt it. Text
@@ -1977,7 +2030,9 @@ a.surface-panel:focus-visible { outline: none; }
      variation       "scroll >>", "<< scroll >>", "<< scroll"
      exclusions      nothing is shrunk, wrapped, enclosed or reflowed; a block
                      that fits shows nothing; print shows neither the label
-                     nor the fade, because paper cannot scroll
+                     nor the fade, because paper cannot scroll; while a block
+                     or box shows keyboard focus, the fade is dropped so its
+                     focus outline shows, and the label stays
      example         a wide diagram at a narrow width: a right-edge fade and
                      "scroll >>" held at the box's left edge
      counterexample  shrinking a diagram's type until it fits
@@ -2019,10 +2074,16 @@ a.surface-panel:focus-visible { outline: none; }
    REGISTERED LITERALS — no token expresses these values
      1.4                   metadata and quotation-attribution leading
      1.3                   Caption leading inside document compositions
-     1px, 2px              hierarchy rail and passage rail widths
+     1px, 2px              hierarchy rail and passage rail widths; the
+                           hierarchy rail's 1px is also a sequence node's ring
+     7px, 50%              a sequence node's diameter and its round corners
+     0.5px, 3.5px          half the rail's rule and half a node: the offsets
+                           that center a node on the rail and its label line
      2px                   with --space-3, a labeled range's lane, which a
                            range-lane table's box keeps (surface-treatments.css)
      #000, transparent     overflow mask stops: alpha only, never paint
+     2px                   a scrollable block's or box's focus-outline width,
+                           the disclosure trigger's (surface-treatments.css)
      0.9em                 inline code, the foundation code rule's own size
      1lh, 2lh, 3lh         blank source lines in structured text; 1lh is also
                            the one line between declared peer groups
@@ -2042,7 +2103,11 @@ a.surface-panel:focus-visible { outline: none; }
        larger value.
      - Without the helper a block or a table's box still scrolls and shows no
        cue. Keyboard scrolling of either is not claimed: nothing here sets a
-       tabindex.
+       tabindex, so whether either takes a Tab stop is the browser's choice,
+       or the consumer's where it sets one. When a browser or a consumer
+       makes one focusable, its focus indicator is the one this module draws:
+       a --fg-1 outline, 2px wide and --space-1 out, with the fade dropped
+       while it shows.
      - Print draws no overflow cue, but a block or a table's box that is wider
        than the printed column keeps its scroll clip there: what lies past its
        edge does not print. Nothing here reflows a block or a table for paper.
@@ -2053,6 +2118,19 @@ a.surface-panel:focus-visible { outline: none; }
        drawn on the left: a right-to-left document is not yet served. A
        first column that spans rows is not served: the lane keys on each
        row's first cell.
+     - A sequence node is placed from the label role's own size and leading:
+       it sits on the first line of a step that opens on its .doc-label, at
+       the step's top. A step that opens on anything else, or that moves its
+       label down with padding or a border of its own, keeps the node where
+       the label line would be; the rendered check reports it.
+     - The node is drawn as the step's ::before. A consumer rule that gives a
+       step's ::before other content takes the node with it.
+     - In print a step longer than a sheet still breaks, and its node stays
+       with its label on the first part. Keeping a step whole can leave space
+       at the foot of a sheet; the rail runs on through it, because the
+       sequence continues on the next sheet.
+     - The sequence rail and its nodes are drawn on the left: a right-to-left
+       document is not yet served.
    ========================================================================= */
 
 /* ---- Text roles ------------------------------------------------------- */
@@ -2315,8 +2393,13 @@ a.surface-panel:focus-visible { outline: none; }
 :where(.doc-table-scroll > table.doc-table > thead > tr) > :where(th) { vertical-align: bottom; border-bottom-color: var(--line-1); }
 /* A narrative table keeps a readable measure: it never narrows below 32rem, and
    inside that width its columns share space by their content. At a narrower
-   width it scrolls in its box rather than squeezing prose. */
-:where(.doc-table-scroll > table.doc-table:not(.doc-dense-table)) { min-width: 32rem; }
+   width it scrolls in its box rather than squeezing prose. A compact table,
+   table.doc-compact-table, is a narrative table its consumer declares short
+   enough to fit, and takes no measure; where its content cannot fit at the
+   same sizes, it scrolls in its box as any table does. A comparison keeps the
+   measure even when it is marked compact. */
+:where(.doc-table-scroll > table.doc-table:not(.doc-dense-table, .doc-compact-table),
+       .doc-table-scroll > table.doc-table.doc-compare-table:not(.doc-dense-table)) { min-width: 32rem; }
 /* A numeric column — its header and its cells — aligns to the end on tabular
    figures, where its values share a format. */
 :where(.doc-table-scroll > table.doc-table > * > tr, .doc-table-scroll > table.doc-table > tr) > :where(.doc-table-num) {
@@ -2555,15 +2638,51 @@ a.surface-panel:focus-visible { outline: none; }
   list-style: none;
 }
 
-/* ---- Hierarchy rail --------------------------------------------------- */
+/* ---- Hierarchy rail and ordered sequence ------------------------------ */
 
 /* The internal rhythm is a zero-specificity default, so a composition class
    placed alongside (.doc-section, .doc-group, .doc-prose) sets its own gap
    whatever the source order. */
 :where(.doc-hierarchy) { display: flex; flex-direction: column; gap: var(--space-3); }
-.doc-hierarchy {
+/* One neutral structural rail, declared once for two compositions. The
+   hierarchy rail says "this belongs inside the level above"; the sequence
+   says "this comes after the step before". They share this geometry and
+   nothing else: a sequence is not a hierarchy level, and neither composes
+   the other. */
+.doc-hierarchy,
+.doc-sequence {
   padding-left: var(--space-4);
   border-left: 1px solid var(--line-2);
+}
+
+/* The ordered sequence. The list's own markers give way to the rail, and the
+   steps sit --space-5 apart, a step being a larger unit than the lines of a
+   group. The rail is the list's border, so it runs the list's full height,
+   through the body of its last step. */
+.doc-sequence {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+/* One node per direct step: an unfilled ring in the step label's own --fg-3,
+   centered on the rail's 1px rule and on the first line of the label the step
+   opens on. The rule's center lies the rail's --space-4 inset plus half the
+   rule, 0.5px, left of the step's content edge; the label's line is its
+   caption size at --lh-tight; 3.5px is half the ring. The rail shows through
+   the ring's empty center. */
+.doc-sequence > .doc-sequence-step { position: relative; }
+.doc-sequence > .doc-sequence-step::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4) - 0.5px - 3.5px);
+  top: calc(var(--fs-caption) * var(--lh-tight) / 2 - 3.5px);
+  width: 7px;
+  height: 7px;
+  box-sizing: border-box;
+  border: 1px solid var(--fg-3);
+  border-radius: 50%;
 }
 
 /* ---- Passage rail ----------------------------------------------------- */
@@ -2578,7 +2697,8 @@ a.surface-panel:focus-visible { outline: none; }
    content, so it takes the magenta emphasis rail, declared exactly as the
    emphasis rail declares it. The document's own callout — a thesis, a posed
    question, a contrast — is .surface-emphasis-rail itself, magenta, composed
-   onto a document text role. Neutral is structure only: the hierarchy rail. */
+   onto a document text role. Neutral is structure only: the hierarchy rail and
+   the ordered sequence on its geometry. */
 .doc-quote {
   --surface-emphasis-accent: var(--ask-emphasis-violet);
   border-left: 2px solid var(--surface-emphasis-accent);
@@ -2701,6 +2821,23 @@ a.surface-panel:focus-visible { outline: none; }
 .doc-pre[data-overflow-start]:not([data-overflow-end])::after,
 .doc-table-scroll[data-overflow-start]:not([data-overflow-end])::after { content: "<< scroll"; }
 
+/* Focus. Nothing here sets a tabindex, but a browser may make a block or a
+   table's box that scrolls focusable, and a consumer may. When it shows
+   keyboard focus, a --fg-1 outline surrounds it, 2px wide and --space-1 out:
+   the disclosure trigger's outline geometry, without its foreground or
+   indicator. The fade is a mask on the same box, and a mask hides what is
+   drawn outside the box, so with the fade in place this outline would not
+   show at all. The fade is dropped while focus shows, and the label beneath
+   still names the direction. This follows the mask rule at the same
+   specificity, so it wins. */
+.doc-pre:focus-visible,
+.doc-table-scroll:focus-visible {
+  outline: 2px solid var(--fg-1);
+  outline-offset: var(--space-1);
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+
 /* Print draws neither. Paper cannot scroll, so a label that says to scroll and
    a fade over content no one can reach are both wrong there, and the helper's
    attributes still describe the screen's width. The block and the table print
@@ -2715,6 +2852,14 @@ a.surface-panel:focus-visible { outline: none; }
   }
   .doc-pre[data-overflow]::after,
   .doc-table-scroll[data-overflow]::after { display: none; }
+}
+
+/* In print, the rule asks the browser to keep a sequence step that fits on
+   one sheet whole, so its node, its label and its body travel together.
+   Where the sequence breaks between steps, the rail, the list's own border,
+   runs to the foot of the sheet and resumes at the head of the next. */
+@media print {
+  .doc-sequence > .doc-sequence-step { break-inside: avoid; }
 }
 
 </style>
@@ -5138,9 +5283,20 @@ body { min-height: 100vh; }
 /* The metadata strip: its facts set close. */
 .meta > p { margin: 0; }
 
-/* The sequence: one register group per step, in order, a register flow
-   whose peers sit --space-5 apart. */
-:where(.artifact) .rq-steps { list-style: none; padding-left: 0; gap: var(--space-5); }
+/* The sequence: the design system's ordered sequence, .doc-sequence in
+   surface-document.css, one .doc-sequence-step per step, in order. The
+   register owns its rail, the steps' --space-5 rhythm and each step's node;
+   nothing here restates or changes them. Its summary above is the register's
+   authorial callout, on the magenta emphasis rail, and the two rails' left
+   edges are the column's start.
+
+   The page adds one thing, its own exception to the register's spacing: the
+   list leads by --space-4 more than the section's gap. The register gives a
+   sequence no lead of its own, so in a section it would sit --space-3 below
+   the summary. Release 1 set these steps as a register flow, which takes that
+   lead, and the page keeps the --space-3 + --space-4 it has always had. If
+   the register later gives a sequence a lead, recheck this rule. */
+.doc-section > .rq-steps { margin-top: var(--space-4); }
 
 /* A plane on the panel material: its content stacked at the plane's gap. */
 .rq-plane { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-5); }
@@ -5154,18 +5310,6 @@ body { min-height: 100vh; }
    the request and its status wrap. A per-table width the register leaves to
    its consumer. */
 [aria-labelledby="requests"] .doc-table > tbody > tr > td:is(:nth-child(2), :nth-child(3)) { white-space: nowrap; }
-
-/* A keyboard-focused table box: the page makes it focusable (tabindex), and
-   at the donor commit the register's scroll fade masks the browser's own
-   focus ring on a narrow screen. This is design-system-ASK#211's rule, kept
-   here until a release takes that commit's surface-document.css (VENDOR.md,
-   behind by decision); remove it then. */
-.doc-table-scroll:focus-visible {
-  outline: 2px solid var(--fg-1);
-  outline-offset: var(--space-1);
-  -webkit-mask-image: none;
-          mask-image: none;
-}
 
 /* The landing section: rqwst.com's landing page set in the register's roles,
    ahead of the concept example. The source sets its hero in open space; here
@@ -5234,7 +5378,9 @@ body { min-height: 100vh; }
    Everything else is inherited: the foreground ramp, lines, line overlay,
    glass and panel material, shadows, emphasis accents, link underline and
    focus, and the rail dose, which the field declaration selects (bare on this
-   unreviewed field; no rail is drawn in this artifact).
+   unreviewed field). Neither rail this artifact draws takes a dose on any
+   field: the sequence summary's magenta authorial callout is an emphasis
+   accent, and the steps' rail is the neutral ordered-sequence rail.
 
    The dark context binds nothing below Tier 3. Its field is ASK's exact ink
    pair and its foreground ASK's #D4C6E1 ramp, so the foundation's own dark
@@ -5291,7 +5437,7 @@ body { min-height: 100vh; }
 <div class="artifact doc-flow">
   <section class="rq-landing" id="landing" aria-labelledby="landing-title">
     <div class="rq-landing-bar">
-      <p class="doc-meta">rqwst.com's landing page, on design-system-ASK</p>
+      <p class="doc-meta"><a class="surface-text-link" href="https://rqwst.com/" target="_blank" rel="noopener">rqwst.com</a>'s landing page, on design-system-ASK</p>
       <div class="doc-actions">
         <p class="doc-label">EN</p>
         <a class="surface-action surface-action--secondary" href="https://rqwst.com/" target="_blank" rel="noopener">Sign In</a>
@@ -5345,29 +5491,29 @@ body { min-height: 100vh; }
   <section class="doc-section" aria-labelledby="sequence">
     <h2 class="doc-section-title" id="sequence">Sequence</h2>
     <p class="doc-body">An illustrative sequence for a request like the sample above.</p>
-    <p class="doc-body">arrive&nbsp;&gt;&gt; route&nbsp;&gt;&gt; book&nbsp;&gt;&gt; answer&nbsp;&gt;&gt; file</p>
-    <ol class="rq-steps doc-flow" aria-label="The five steps of the sample sequence">
-      <li class="doc-group">
+    <p class="doc-body surface-emphasis-rail">arrive&nbsp;&gt;&gt; route&nbsp;&gt;&gt; book&nbsp;&gt;&gt; answer&nbsp;&gt;&gt; file</p>
+    <ol class="rq-steps doc-sequence" aria-label="The five steps of the sample sequence">
+      <li class="doc-sequence-step doc-group">
         <p class="doc-label">step 1</p>
         <h3 class="doc-subsection-title">Arrive</h3>
         <p class="doc-body">A question comes in with its topic, outlet and deadline.</p>
       </li>
-      <li class="doc-group">
+      <li class="doc-sequence-step doc-group">
         <p class="doc-label">step 2</p>
         <h3 class="doc-subsection-title">Route</h3>
         <p class="doc-body">It goes to the person best placed to answer it.</p>
       </li>
-      <li class="doc-group">
+      <li class="doc-sequence-step doc-group">
         <p class="doc-label">step 3</p>
         <h3 class="doc-subsection-title">Book</h3>
         <p class="doc-body">A time is agreed for the comment or the interview.</p>
       </li>
-      <li class="doc-group">
+      <li class="doc-sequence-step doc-group">
         <p class="doc-label">step 4</p>
         <h3 class="doc-subsection-title">Answer</h3>
         <p class="doc-body">The comment is delivered before the deadline.</p>
       </li>
-      <li class="doc-group">
+      <li class="doc-sequence-step doc-group">
         <p class="doc-label">step 5</p>
         <h3 class="doc-subsection-title">File</h3>
         <p class="doc-body">The exchange is kept for reference.</p>
@@ -5422,11 +5568,11 @@ body { min-height: 100vh; }
   <footer class="provenance" id="provenance">
     <dl>
       <dt class="doc-label">page</dt>
-      <dd class="doc-meta">RQWST // design demo, release <code class="doc-code">public-demo-v1</code></dd>
+      <dd class="doc-meta">RQWST // design demo, release <code class="doc-code">public-demo-v2</code></dd>
       <dt class="doc-label">content</dt>
       <dd class="doc-meta">the landing section: RQWST's public copy from rqwst.com, 14 November 2026, apart from its label; the rest: written for this public demo, where every sample is illustrative and fictional</dd>
       <dt class="doc-label">design system</dt>
-      <dd class="doc-meta">design-system-ASK <code class="doc-code">300ec48</code>, the surface shell with the output-artifact v3 register</dd>
+      <dd class="doc-meta">design-system-ASK <code class="doc-code">1f5461f</code>, the surface shell with the output-artifact v3 register</dd>
       <dt class="doc-label">presentation</dt>
       <dd class="doc-meta">the rqwst assignment: RQWST's lavender field in light, the design system's own roles in dark</dd>
       <dt class="doc-label">rights</dt>
