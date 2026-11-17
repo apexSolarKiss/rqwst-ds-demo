@@ -23,7 +23,7 @@ This repository's history is new and public. It carries a design demo of RQWST's
   - The provenance footer names this release and its design-system commit, `842f272`.
   - No other word, order or link changed.
 - **Checked:**
-  - `python3 tools/check.py --donor <design-system-ASK clone>` passes, with the role-conformance check at `842f272`, in light and dark at 1440px and at 375px on a phone. It ran without `--denylist`.
+  - `python3 tools/check.py --donor <design-system-ASK clone> --denylist <list kept outside the repository>` passes, with the role-conformance check at `842f272`, in light and dark at 1440px and at 375px on a phone.
   - The page was rendered at desktop and phone widths in light and dark, its navigation was used, and it was printed from a desktop and a phone-width window in both themes. Against release 2, the only differences are the dark bordered label's edge, on screen and on paper, and the footer's release and commit.
 
 ### Release 2 // `public-demo-v2`
