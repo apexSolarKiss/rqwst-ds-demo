@@ -4,7 +4,7 @@ The files under `source/_dsa-tokens/` and `source/_dsa-surface/` are copied unmo
 
 **Do not edit them.** A local difference belongs in `source/styles/rqwst.css` or `source/styles/rqwst-assignment.css`, which the page loads after them. Keeping the vendored bytes unchanged is what lets each file be checked against the design system.
 
-- **Donor:** `apexSolarKiss/design-system-ASK` at commit `1f5461fa1e6283be2daa2fdaee7849cf2977a7de`, where design-system-ASK#214 merged. All 18 files below are at that commit.
+- **Donor:** `apexSolarKiss/design-system-ASK` at commit `842f272280a3240ac51182d43d5d70efe7108f2c`, where design-system-ASK#223 merged. All 18 files below are at that commit.
 - **Files:** 16 design-system files and the design system's own license and notice, each byte-identical to its donor's file. The git blob is the id `git rev-parse <commit>:<path>` gives for the donor's file, and the id `git hash-object` gives for the copy here.
 
 | Here | In design-system-ASK | Bytes | Git blob | SHA-256 |
@@ -17,8 +17,8 @@ The files under `source/_dsa-tokens/` and `source/_dsa-surface/` are copied unmo
 | `source/_dsa-surface/surface-shell.js` | `patterns/surface-shell/surface-shell.js` | 53,439 | `38b01d4b2f299aef261050ff465a76c781b5b700` | `a69b9de1d5b316ab8ee37f2670f61284dac5f84be2ba43c522bdc2e2d6f8d5e9` |
 | `source/_dsa-surface/surface-shell.template.html` | `patterns/surface-shell/surface-shell.template.html` | 15,976 | `bec3c28f83f2fa67021f9816948f0529e0df43f1` | `9fab10a625cec1e0764f16ec40affe4b26a8333aefcb45f470b1623c338ee9f0` |
 | `source/_dsa-surface/surface-text-link.css` | `surface-text-link.css` | 7,921 | `a9c51dd6e2ad41eb4b010a138d422e4c02d91909` | `9a6acf457ffbe2a0bb31ae28507855b6446195ff9dcd3cc7112f04ec5bf0fce3` |
-| `source/_dsa-surface/surface-treatments.css` | `surface-treatments.css` | 48,906 | `3da092b5c26baccfc5fba2a8b001c09f695cceba` | `a277e97e99779f42053e6c1c4043ddda1ecdfaaa34945096dc1cf724b2625c31` |
-| `source/_dsa-tokens/colors_and_type.css` | `colors_and_type.css` | 15,945 | `e16dfa72b55919f5487581550c70976781a6b0eb` | `d00f1f4f17d4af5201d840dd9f1f558800e69c77280826a3f8d07e9ffd99ef5e` |
+| `source/_dsa-surface/surface-treatments.css` | `surface-treatments.css` | 55,223 | `577f5a537f5caf1f5e51dfaf19de28e407edaa22` | `272bb52c3f84e845a2c040bf90e0b04289bd3b121512de8e879c70665fec06da` |
+| `source/_dsa-tokens/colors_and_type.css` | `colors_and_type.css` | 17,164 | `3301499c24444107dfbcd2ea23cb48d6bee5e3ce` | `14631bbcca9f18f2b59ec1483daac91dd3a51ada0f38f451ba06d73ebb838bf4` |
 | `source/_dsa-tokens/fonts/Inter-OFL.txt` | `fonts/Inter-OFL.txt` | 4,380 | `9b2ca37b3ffc77391d8b2ebef4a974ef32bf46ea` | `262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a` |
 | `source/_dsa-tokens/fonts/InterVariable-Italic.woff2` | `fonts/InterVariable-Italic.woff2` | 387,976 | `b3530f3f5269165314114a9e1c2f129e20fddcbd` | `e564f652916db6c139570fefb9524a77c4d48f30c92928de9db19b6b5c7a262a` |
 | `source/_dsa-tokens/fonts/InterVariable.woff2` | `fonts/InterVariable.woff2` | 352,240 | `5a8d3e72ad7ffb62af3b146e1b1f54ab5813a212` | `693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3` |
@@ -26,7 +26,7 @@ The files under `source/_dsa-tokens/` and `source/_dsa-surface/` are copied unmo
 | `source/_dsa-tokens/fonts/JetBrainsMono-OFL.txt` | `fonts/JetBrainsMono-OFL.txt` | 4,399 | `5ceee0025da23d2cd5fd14b28569708a8db4db2b` | `a76abf002c49097d146e86740a3105a5d00450b1592e820a1109a8c5680cd697` |
 | `source/_dsa-tokens/fonts/JetBrainsMono.woff2` | `fonts/JetBrainsMono.woff2` | 113,672 | `856547f84b0365f4db7bfee3ac88f558a117410e` | `31ec365b93e4bad6f202ce23352a56d01ca4462b2afc782ed2cf6fa42ca9ac0e` |
 | `licenses/design-system-ASK/LICENSE` | `LICENSE` | 10,835 | `0c382f604647738e78449026c3dd3d5c26702a6f` | `8188fe74beac4005f834721ae459e84909cd42c55554549ad750f50fcfc20801` |
-| `licenses/design-system-ASK/NOTICE` | `NOTICE` | 425 | `f978d4aa912e5691eafedc7cde560d7f694b04f5` | `58fb1aaa9c9eba885d5d72d10ee86764fe69753cd1bfe3a3ac175cdcbef0fc46` |
+| `licenses/design-system-ASK/NOTICE` | `NOTICE` | 1,602 | `985a32e5583c599c494d16030fb5d2dae6fe4fbf` | `8b6de487f00ed3b3ec4835b9a3ed44a3785d705e2840157d165d8e96356759aa` |
 
 ## Load order
 

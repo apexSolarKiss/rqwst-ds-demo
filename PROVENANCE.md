@@ -11,6 +11,21 @@ This repository's history is new and public. It carries a design demo of RQWST's
 
 ## Releases
 
+### Release 3 // `public-demo-v3`
+
+- **Sealed page:** `index.html`, 2,987,649 bytes, SHA-256 `a75695e14161957afafd1f2cf86847ef2752e4d088b6b25d2ed7bcd49f0ef589`.
+- **Design system:** design-system-ASK at `842f272280a3240ac51182d43d5d70efe7108f2c`, where design-system-ASK#223 merged, as listed in `VENDOR.md`. Three vendored files moved from release 2's `1f5461f`: `surface-treatments.css` (design-system-ASK#219 and #222), `colors_and_type.css` (#223) and the design system's `NOTICE` (#221).
+- **What changed:**
+  - In dark, the bordered label, `sample // illustrative` in the Sample request plane, is now the plain 1px border: #219 takes its edge's reinforcement from 0.5px to 0. In light its edge stays 2px, the 1px border and 1px of reinforcement. The label's box and margins are unchanged, so nothing moves.
+  - The rest of #219 and #222, the rail and fill paints, reaches nothing on this page, which draws no state rail, labeled range or fill. #223's six reserved state values are not read here.
+  - The design system's `NOTICE` carries #221's paragraph on its layered-network specimen, which this repository does not include; the notice travels whole with the design system's files.
+  - The assignment stylesheet's comment no longer says the field declaration selects a rail dose: at `842f272` the rail paint is none for every color and reads no field declaration.
+  - The provenance footer names this release and its design-system commit, `842f272`.
+  - No other word, order or link changed.
+- **Checked:**
+  - `python3 tools/check.py --donor <design-system-ASK clone>` passes, with the role-conformance check at `842f272`, in light and dark at 1440px and at 375px on a phone. It ran without `--denylist`.
+  - The page was rendered at desktop and phone widths in light and dark, its navigation was used, and it was printed from a desktop and a phone-width window in both themes. Against release 2, the only differences are the dark bordered label's edge, on screen and on paper, and the footer's release and commit.
+
 ### Release 2 // `public-demo-v2`
 
 - **Sealed page:** `index.html`, 2,980,087 bytes, SHA-256 `e99cb4fd86cb60b68fad071012e879af41dd898d80cb0f98456ba80b50ead5ba`.
