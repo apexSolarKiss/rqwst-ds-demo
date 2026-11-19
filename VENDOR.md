@@ -4,7 +4,7 @@ The files under `source/_dsa-tokens/` and `source/_dsa-surface/` are copied unmo
 
 **Do not edit them.** A local difference belongs in `source/styles/rqwst.css` or `source/styles/rqwst-assignment.css`, which the page loads after them. Keeping the vendored bytes unchanged is what lets each file be checked against the design system.
 
-- **Donor:** `apexSolarKiss/design-system-ASK` at commit `842f272280a3240ac51182d43d5d70efe7108f2c`, where design-system-ASK#223 merged. All 18 files below are at that commit.
+- **Donor:** `apexSolarKiss/design-system-ASK` at commit `aa7bfb00df9ac7f80b15ab118ff1c46403f265db`, where design-system-ASK#230 merged. All 18 files below are at that commit.
 - **Files:** 16 design-system files and the design system's own license and notice, each byte-identical to its donor's file. The git blob is the id `git rev-parse <commit>:<path>` gives for the donor's file, and the id `git hash-object` gives for the copy here.
 
 | Here | In design-system-ASK | Bytes | Git blob | SHA-256 |
@@ -17,8 +17,8 @@ The files under `source/_dsa-tokens/` and `source/_dsa-surface/` are copied unmo
 | `source/_dsa-surface/surface-shell.js` | `patterns/surface-shell/surface-shell.js` | 53,439 | `38b01d4b2f299aef261050ff465a76c781b5b700` | `a69b9de1d5b316ab8ee37f2670f61284dac5f84be2ba43c522bdc2e2d6f8d5e9` |
 | `source/_dsa-surface/surface-shell.template.html` | `patterns/surface-shell/surface-shell.template.html` | 15,976 | `bec3c28f83f2fa67021f9816948f0529e0df43f1` | `9fab10a625cec1e0764f16ec40affe4b26a8333aefcb45f470b1623c338ee9f0` |
 | `source/_dsa-surface/surface-text-link.css` | `surface-text-link.css` | 7,921 | `a9c51dd6e2ad41eb4b010a138d422e4c02d91909` | `9a6acf457ffbe2a0bb31ae28507855b6446195ff9dcd3cc7112f04ec5bf0fce3` |
-| `source/_dsa-surface/surface-treatments.css` | `surface-treatments.css` | 55,223 | `577f5a537f5caf1f5e51dfaf19de28e407edaa22` | `272bb52c3f84e845a2c040bf90e0b04289bd3b121512de8e879c70665fec06da` |
-| `source/_dsa-tokens/colors_and_type.css` | `colors_and_type.css` | 17,164 | `3301499c24444107dfbcd2ea23cb48d6bee5e3ce` | `14631bbcca9f18f2b59ec1483daac91dd3a51ada0f38f451ba06d73ebb838bf4` |
+| `source/_dsa-surface/surface-treatments.css` | `surface-treatments.css` | 69,299 | `71ac72e16175c6a6a48db8dea3824bb6e67a3adb` | `ae03dda052475be5d6ea14e0fab8dd3f1608fdf5b9d09b4859a1f146a08fc0dc` |
+| `source/_dsa-tokens/colors_and_type.css` | `colors_and_type.css` | 17,164 | `52e0d83eed89e5a16318dcc58ca4719707689f0b` | `4913d77072b44e9b5217bb2a64526ae3ee5248913a9eade08a63d8f520d11385` |
 | `source/_dsa-tokens/fonts/Inter-OFL.txt` | `fonts/Inter-OFL.txt` | 4,380 | `9b2ca37b3ffc77391d8b2ebef4a974ef32bf46ea` | `262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a` |
 | `source/_dsa-tokens/fonts/InterVariable-Italic.woff2` | `fonts/InterVariable-Italic.woff2` | 387,976 | `b3530f3f5269165314114a9e1c2f129e20fddcbd` | `e564f652916db6c139570fefb9524a77c4d48f30c92928de9db19b6b5c7a262a` |
 | `source/_dsa-tokens/fonts/InterVariable.woff2` | `fonts/InterVariable.woff2` | 352,240 | `5a8d3e72ad7ffb62af3b146e1b1f54ab5813a212` | `693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3` |

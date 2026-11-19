@@ -6,14 +6,10 @@
                                            design-system-ASK clone at DIR, and run that commit's role-conformance
                                            check on index.html with the RQWST presentation assignment
                                            (needs Node 22 or later and Google Chrome)
-  python3 tools/check.py --denylist FILE   also scan the tree for the terms listed in FILE, a list kept outside
-                                           this repository (or name it in $RQWST_CHECK_DENYLIST)
 
-The options combine. A denylist file holds one term per line, matched without regard to case; a line
-starting "allow:" names an exact passage that is content and is set aside before matching; blank lines
-and lines starting "#" are ignored. A hit is reported by file, line and the term's number (the five
-generic patterns first, then the denylist's terms in order), never by the term itself. Line numbers
-are the file's own: in index.html, the parts set aside before matching keep their line breaks.
+A hit is reported by file, line and the term's number (the five generic patterns, in order), never by
+the term itself. Line numbers are the file's own: in index.html, the parts set aside before matching
+keep their line breaks.
 
 What it checks:
 
@@ -25,16 +21,15 @@ What it checks:
              is inlined; its only other addresses are ordinary links, the canonical link and its link-preview
              metadata (og: and twitter:), none of which the page loads
   public     no absolute local path (a home or temporary folder) and no file: URL appears anywhere in the
-             tree, nor, with --denylist, any listed term; no rqwst.com email address appears other than
-             RQWST's public contact, hello@rqwst.com, and no rqwst.com URL other than its three public
-             pages (PUBLIC_URLS below); the vendored design-system bytes are verified by identity instead
+             tree; no rqwst.com email address appears other than RQWST's public contact, hello@rqwst.com,
+             and no rqwst.com URL other than its three public pages (PUBLIC_URLS below); the vendored
+             design-system bytes are verified by identity instead
   artwork    the repository artwork draws RQWST's own identity paths, and the PNGs are the banner's exports
   assignment with --donor: the design system's role-conformance check passes on index.html, opened as a
              file, in light and dark, at 1440px and at 375px on a phone, under the assignment's declaration
 
 Exit 0: every check ran and passed. 1: a check failed. 2: every check that ran passed, but the donor
-checks did not run (no --donor). Running without a denylist is reported and does not change the exit
-code. Standard library only.
+checks did not run (no --donor). Standard library only.
 """
 import base64, hashlib, html, importlib.util, json, os, re, shutil, struct, subprocess, sys, tempfile
 
@@ -45,7 +40,7 @@ VENDORED_DIRS = ('source/_dsa-tokens', 'source/_dsa-surface', 'licenses/design-s
 CHECKER = ('tools/check-role-conformance.mjs', 'tools/role-conformance.js')
 
 # Absolute local paths and file: URLs, matched without regard to case. Each entry is split so that this
-# file does not match itself. Other terms come from a denylist kept outside the repository (--denylist).
+# file does not match itself.
 GENERIC = ['/Us' 'ers/', '/ho' 'me/', '/pri' 'vate/', '/t' 'mp/', 'file' '://']
 
 # RQWST's public contact and its three public pages are the only rqwst.com email address and URLs the
@@ -55,17 +50,6 @@ PUBLIC_CONTACT = 'hello@rqwst.com'
 PUBLIC_URLS = {'https://rqwst.com/', 'https://rqwst.com/apply', 'https://rqwst.com/terms'}
 RQWST_ADDRESS = re.compile(r"(?<![\w.%+!#$&'*/=?^`{|}~-])[\w.%+-]+(?:@|%40)(?:[A-Za-z0-9-]+\.)*rqwst\.com\b", re.I)
 RQWST_URL = re.compile(r"https?://(?:[A-Za-z0-9-]+\.)*rqwst\.com\b[^\s\"'<>()]*", re.I)
-
-
-def load_denylist(path):
-    terms, allowed = [], []
-    with open(path, encoding='utf-8') as f:
-        for line in f:
-            line = line.rstrip('\n')
-            if not line.strip() or line.lstrip().startswith('#'):
-                continue
-            (allowed if line.startswith('allow:') else terms).append(line[6:] if line.startswith('allow:') else line.strip())
-    return terms, allowed
 
 
 def rd(rel, mode='r'):
@@ -182,12 +166,9 @@ def blank(s):
     return re.sub(r'[^\n]', ' ', s)
 
 
-def scan(text, where, found, terms, allowed):
-    # A hit names the term by its number, never by its words or their context: a denylist holds words that
-    # must not be copied anywhere, and that includes this report.
+def scan(text, where, found, terms):
+    # A hit names the term by its number, never by its words or their context.
     low = text.lower()
-    for a in allowed:
-        low = low.replace(a.lower(), blank(a))
     for k, t in enumerate(terms, 1):
         n = low.count(t.lower())
         if n:
@@ -215,12 +196,10 @@ def png_text(b):
     return '\n'.join(parts)
 
 
-def check_public(out, denylist):
+def check_public(out):
     _, rows = vendor_table(); vendored = {h: s for h, _, _, _, s in rows}
-    extra, allowed = load_denylist(denylist) if denylist else ([], [])
-    terms = GENERIC + extra
     found, scanned = [], 0
-    scan_ = lambda text, where: scan(text, where, found, terms, allowed)
+    scan_ = lambda text, where: scan(text, where, found, GENERIC)
     for dp, ds, fs in os.walk(ROOT):
         ds[:] = [d for d in ds if d != '.git']
         for f in fs:
@@ -244,7 +223,7 @@ def check_public(out, denylist):
                         scan_(base64.b64decode(data).decode('utf-8', errors='replace'), f'index.html ({mime} data)')
                 text = re.sub(r'data:[\w/+.-]+;base64,[A-Za-z0-9+/=]+', 'data:', text)
             scan_(text, rel)
-    what = f'{len(GENERIC)} generic patterns' + (f' and {len(extra)} denylist terms ({len(allowed)} allowed passages)' if denylist else '')
+    what = f'{len(GENERIC)} generic patterns'
     out('public', not found, f'{scanned} files scanned for {what}; {len(vendored)} vendored files verified by identity' if not found else '; '.join(found[:12]) + (f' (+{len(found) - 12})' if len(found) > 12 else ''))
 
 
@@ -299,19 +278,14 @@ def check_assignment(donor_dir, out):
 
 
 def main(argv):
-    donor, denylist = None, os.environ.get('RQWST_CHECK_DENYLIST') or None
+    donor = None
     args = list(argv)
     while args:
-        if args[0] in ('--donor', '--denylist') and len(args) >= 2:
-            if args[0] == '--donor': donor = os.path.abspath(args[1])
-            else: denylist = os.path.abspath(args[1])
+        if args[0] == '--donor' and len(args) >= 2:
+            donor = os.path.abspath(args[1])
             args = args[2:]
         else:
             sys.exit(__doc__)
-    if denylist and os.path.realpath(denylist).startswith(os.path.realpath(ROOT) + os.sep):
-        sys.exit('the denylist must be kept outside this repository')
-    if denylist and not os.path.isfile(denylist):
-        sys.exit(f'no denylist at {denylist}')
     results = []
 
     def out(name, ok, detail):
@@ -319,9 +293,7 @@ def main(argv):
     check_vendor(donor, out)
     check_seal(out)
     check_delivery(out)
-    check_public(out, denylist)
-    if not denylist:
-        print('SKIP  public, denylist: no --denylist or RQWST_CHECK_DENYLIST')
+    check_public(out)
     check_artwork(out)
     if donor:
         check_assignment(donor, out)

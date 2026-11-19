@@ -11,6 +11,19 @@ This repository's history is new and public. It carries a design demo of RQWST's
 
 ## Releases
 
+### Release 4 // `public-demo-v4`
+
+- **Sealed page:** `index.html`, 3,001,725 bytes, SHA-256 `8d87fbcf6572a37e5f415717a839c432ed287933a7f2843783f929764d3bb1c9`.
+- **Design system:** design-system-ASK at `aa7bfb00df9ac7f80b15ab118ff1c46403f265db`, where design-system-ASK#230 merged, as listed in `VENDOR.md`. Two vendored files moved from release 3's `842f272`: `colors_and_type.css` (design-system-ASK#227) and `surface-treatments.css` (#227 and #229).
+- **What changed:**
+  - #227 moves the reserved brown state value from `#B17A43` to `#895538`. As in release 3, no reserved state value is read here.
+  - The rest of #227 and #229 reaches nothing on this page: the emphasis panel's edge now draws through a shared perimeter paint, the rail paints take color names and stay none, and the treatments add an ink for brown fills and a marker family. The page draws no emphasis panel, perimeter, marker, state rail or fill.
+  - The provenance footer names this release and its design-system commit, `aa7bfb0`.
+  - No other word, order or link changed.
+- **Checked:**
+  - `python3 tools/check.py --donor <design-system-ASK clone>` passes, with the role-conformance check at `aa7bfb0`, in light and dark at 1440px and at 375px on a phone.
+  - The page was rendered at desktop and phone widths in light and dark, its navigation was used, and it was printed from a desktop and a phone-width window in both themes. Against release 3, the only differences are the footer's release and commit.
+
 ### Release 3 // `public-demo-v3`
 
 - **Sealed page:** `index.html`, 2,987,649 bytes, SHA-256 `a75695e14161957afafd1f2cf86847ef2752e4d088b6b25d2ed7bcd49f0ef589`.
@@ -79,6 +92,8 @@ This repository's history is new and public. It carries a design demo of RQWST's
   - no semantic signal is used.
 
 ## Adding a release
+
+**Private-term screening is retired.** It was a one-time control used while converting an earlier private prototype into this content-reduced public demo. The current public demo is ASK-approved. Future releases and design-system maintenance use the ordinary release procedure below and do not request, reconstruct or run a private term list. Historical release entries remain unchanged as records of checks performed at the time.
 
 1. Change the source. If the design system moves, copy its files again and update `VENDOR.md`.
 2. Seal with `python3 tools/seal.py`, then run `python3 tools/check.py --donor <a design-system-ASK clone>` until it passes. Open, navigate and print the page in light and dark, at desktop and phone widths.
