@@ -11,6 +11,19 @@ This repository's history is new and public. It carries a design demo of RQWST's
 
 ## Releases
 
+### Release 5 // `public-demo-v5`
+
+- **Sealed page:** `index.html`, 3,004,808 bytes, SHA-256 `48b62583346edd0abc74d4f47bab7cfbabd0b24a7c20e0547e149a436ed7e9d1`.
+- **Design system:** design-system-ASK at `89397df24550bd5c7f1d64d1c8a8b46143c0219f`, where design-system-ASK#237 merged, as listed in `VENDOR.md`. Two vendored files moved from release 4's `aa7bfb0`: `colors_and_type.css` (design-system-ASK#233 and #237) and `surface-treatments.css` (#237).
+- **What changed:**
+  - #233 and #237 change only comments in `colors_and_type.css`. The reserved state values' header now says that artwork may paint one only where an ASK-approved artwork palette expressly includes it, and lists the roles that bind each value in the semantic systems; brown is kept with no semantic assignment. No value changed, and as in release 4, no reserved state value is read here.
+  - #237 gives new values to the fill inks on yellow, green, orange, white, red, violet and magenta, makes magenta's ink the same in both themes and retires the `--surface-rail-paint-structural` alias. None of it reaches this page, which draws no fill, state rail, keyed label or semantic role: rendered against release 4, every element and its `::before` and `::after` compute the same styles and boxes, in light and dark, at desktop and phone widths and in print, apart from the changed tokens' own values, which nothing on the page reads.
+  - The provenance footer names this release and its design-system commit, `89397df`.
+  - No other word, order or link changed.
+- **Checked:**
+  - `python3 tools/check.py --donor <design-system-ASK clone>` passes, with the role-conformance check at `89397df`, in light and dark at 1440px and at 375px on a phone.
+  - The page was rendered at desktop and phone widths in light and dark, its navigation was used, and it was printed from a desktop and a phone-width window in both themes. Against release 4, the only differences are the footer's release and commit, on screen and on paper.
+
 ### Release 4 // `public-demo-v4`
 
 - **Sealed page:** `index.html`, 3,001,725 bytes, SHA-256 `8d87fbcf6572a37e5f415717a839c432ed287933a7f2843783f929764d3bb1c9`.
